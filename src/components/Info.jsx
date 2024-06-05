@@ -33,7 +33,7 @@ export default function Info(props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filter.map}
+                {props.map()}
                 <TableRow>
                   <TableCell>{naziv}</TableCell>
                   <TableCell>{email}</TableCell>

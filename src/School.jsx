@@ -38,7 +38,7 @@ export default function School(props) {
       <CardContent>
         <p>
           <span className="font-bold">Naslov:</span> {naslov}, poštna številka:{" "}
-          {postna_stevilka}, {posta}
+          {postna_stevilka}, {posta}, {email}
         </p>
         <Dialog>
           <DialogTrigger>
