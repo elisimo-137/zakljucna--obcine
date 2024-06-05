@@ -17,12 +17,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Info from "./components/Info";
 
 export default function App() {
   const [data, setData] = useState([]);
   const [obcine, setObcine] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedObcina, setSelectedObcina] = useState("all");
+  const [filter, setFilter] = useState([]);
 
   async function getSchools() {
     const response = await fetch("http://static.404.si/grace/");
@@ -40,6 +50,22 @@ export default function App() {
     getSchools();
     getMunicipality();
   }, []);
+
+  useEffect(() => {
+    setFilter(
+      data
+
+        .filter(
+          (school) =>
+            school.obcina == selectedObcina || selectedObcina == "all",
+        )
+        .filter(
+          (school) =>
+            school.postna_stevilka.toString().startsWith(search) ||
+            search == "",
+        ),
+    );
+  }, [selectedObcina, search, data]);
 
   return (
     <>
@@ -64,6 +90,8 @@ export default function App() {
             onChange={(value) => setSearch(value.currentTarget.value)}
           ></Input>
           {/* Dodaj input, ki bo omogčal iskanje po poštni številki. Ne pozabi na onChange event. */}
+          <Info filter={filter}></Info>
+          {filter.length}
         </div>
       </div>
       <div className="container">
