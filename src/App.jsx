@@ -26,6 +26,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Info from "./components/Info";
+import { Grafi } from "./Grafi";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -33,6 +34,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [selectedObcina, setSelectedObcina] = useState("all");
   const [filter, setFilter] = useState([]);
+  const [prebivalstvo, setPrebivalstvo] = useState([]);
 
   async function getSchools() {
     const response = await fetch("https://static.404.si/grace/");
@@ -46,9 +48,16 @@ export default function App() {
     setObcine(data);
   }
 
+  async function getPrebivalstvo() {
+    const response = await fetch("https://static.404.si/grace/prebivalstvo");
+    const data = await response.json();
+    setPrebivalstvo([Object.keys(data), Object.values(data)]);
+  }
+
   useEffect(() => {
     getSchools();
     getMunicipality();
+    getPrebivalstvo();
   }, []);
 
   useEffect(() => {
@@ -89,12 +98,14 @@ export default function App() {
             type="number"
             onChange={(value) => setSearch(value.currentTarget.value)}
           ></Input>
+
           {/* Dodaj input, ki bo omogčal iskanje po poštni številki. Ne pozabi na onChange event. */}
           <Info filter={filter}></Info>
           {filter.length}
         </div>
       </div>
       <div className="container">
+        <Grafi prebivalstvo={prebivalstvo}></Grafi>
         <div className="grid grid-cols-3 gap-4">
           {/* Uporabi map funkcijo, ki se bo sprehodila, čez vse šole in jih prikazala v obliki kartic. */}
           {/* Dodaj dva filtra: enega za filtriranje po obcini, drugega za filtriranje glede na poštno številko šole. */}

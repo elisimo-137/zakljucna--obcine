@@ -33,10 +33,9 @@ export default function Info(props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {props.map()}
                 <TableRow>
-                  <TableCell>{naziv}</TableCell>
-                  <TableCell>{email}</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableBody>
             </Table>
